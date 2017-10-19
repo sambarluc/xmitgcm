@@ -790,3 +790,25 @@ def test_open_with_ref_date_swap(mds_datadirs_with_refdate, method):
                                  ref_date=expected['ref_date'], read_grid=True,
                                  delta_t=expected['delta_t'], swap_dims=method,
                                  geometry=expected['geometry'])
+
+@pytest.mark.parametrize("method", [True, False])
+def test_print_with_ref_date_grid(mds_datadirs_with_refdate, method):
+    """With ref_date, without grid."""
+    dirname, expected = mds_datadirs_with_refdate
+
+    ds = xmitgcm.open_mdsdataset(dirname, iters='all', prefix=['S'],
+                                 ref_date=expected['ref_date'], read_grid=method,
+                                 delta_t=expected['delta_t'],
+                                 geometry=expected['geometry'])
+    print(ds.time)
+
+@pytest.mark.parametrize("method", [True, False])
+def test_print_with_ref_date_swap(mds_datadirs_with_refdate, method):
+    """With ref_date, without grid."""
+    dirname, expected = mds_datadirs_with_refdate
+
+    ds = xmitgcm.open_mdsdataset(dirname, iters='all', prefix=['S'],
+                                 ref_date=expected['ref_date'], read_grid=True,
+                                 delta_t=expected['delta_t'], swap_dims=method,
+                                 geometry=expected['geometry'])
+    print(ds.time)
